@@ -1,19 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { JEST_TIMEOUT_DELAY } from './setup';
+import { getInitialisedApp } from './initialise';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 describe('AppController (e2e)', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+  beforeAll(async () => {
+    app = await getInitialisedApp();
+  }, JEST_TIMEOUT_DELAY);
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
+  afterAll(async () => {
+    await app.close();
+  }, JEST_TIMEOUT_DELAY);
 
   it('/ (GET)', () => {
     return request(app.getHttpServer())

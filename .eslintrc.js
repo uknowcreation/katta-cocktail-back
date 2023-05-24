@@ -22,4 +22,13 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
   },
+  overrides: [
+    {
+      // Turn off the rule on controllers, gateways and migrations for everything
+      files: ['*controller.ts', '*gateway.ts', '**/migration/*.ts'],
+      rules: {
+        '@typescript-eslint/explicit-member-accessibility': 'off',
+      },
+    },
+  ]
 };
