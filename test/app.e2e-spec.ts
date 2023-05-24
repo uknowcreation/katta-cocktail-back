@@ -14,10 +14,29 @@ describe('AppController (e2e)', () => {
     await app.close();
   }, JEST_TIMEOUT_DELAY);
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  describe('/cocktail', () => {
+    it('/all (GET)', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/cocktail/all')
+        .expect(200);
+
+      expect(body).toEqual([
+        {
+          name: 'Mojito',
+          description:
+            'Le Mojito est un cocktail à base de rhum, de citron vert, de sucre de canne, de menthe et d eau gazeuse',
+        },
+        {
+          name: 'Margarita',
+          description:
+            'La Margarita est un cocktail à base de tequila, de citron vert et de triple sec',
+        },
+        {
+          name: 'Last Word',
+          description:
+            'Le Last Word est un cocktail à base de gin, de Chartreuse verte, de jus de citron vert et de marasquin',
+        },
+      ]);
+    });
   });
 });
