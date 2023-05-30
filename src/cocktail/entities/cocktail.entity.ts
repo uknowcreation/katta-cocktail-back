@@ -1,7 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { Order } from '../../order/entities/order.entity';
 
 @Entity()
 export class Cocktail {
+  @OneToMany(() => Order, (order) => order.cocktail)
+  @JoinColumn()
+  orders!: Order[];
+
   @PrimaryGeneratedColumn()
   id!: number;
 
